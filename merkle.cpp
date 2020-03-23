@@ -34,7 +34,8 @@ int GetNextPowerOf2(const long int num) {
 			return next;	
 		}
 	}
-	return next; // returns -1 as err
+	printf("Error: next power of 2 not found.");
+	return next;
 }
 
 bool IsPowerOf2(long int num) {
