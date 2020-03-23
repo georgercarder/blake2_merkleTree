@@ -295,24 +295,24 @@ class Merkle {
 
 int main() {
 	
-	Merkle *m = new(Merkle);
-	int height = 4;
-	*m = Merkle(height);
 	
 	//int lengthOfData = 124875291;
 	//uint8_t *data = (uint8_t*)malloc(lengthOfData * sizeof(uint8_t));
 	
   	std::string testDataDir = "testData/";
-	std::vector<std::string> filenames = {testDataDir + "_1MBfile.dat"/*,
-	     			              // FIXME SEGFAULTS ON LARGER
-					      // DATASETS
+	std::vector<std::string> filenames = {testDataDir + "_1MBfile.dat",
 					      testDataDir + "_10MBfile.dat",
 					      testDataDir + "_100MBfile.dat",
-					      testDataDir + "_1GBfile.dat",
+					      testDataDir + "_1GBfile.dat"/*,
 					  testDataDir + "_10GBfile.dat"*/};
   	generateTestData(filenames); 
 
 	for (int i = 0; i < filenames.size(); ++i) {
+		
+		Merkle *m = new(Merkle);
+		int height = 4;
+		*m = Merkle(height);
+		
 		std::cout << "\nBenchmark for " << filenames.at(i) << "\n";
 		std::ifstream file(filenames.at(i));
 		file.seekg(0, file.end);
