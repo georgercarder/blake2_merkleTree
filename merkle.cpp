@@ -209,27 +209,6 @@ class Merkle {
 		}
 	}
 
-	void SetLeaves(uint8_t* data, int dataLen) {
-		if (parent == NULL && !IsPowerOf2(dataLen)) {
-			// pad the data
-			int powerOf2Length = GetNextPowerOf2(dataLen);
-			uint8_t* padded = (uint8_t*)malloc(powerOf2Length * sizeof(uint8_t));
-			memcpy(padded, data, dataLen);	
-		        data = padded;	
-			dataLen = powerOf2Length;
-		}
-		int splitDataLen = dataLen / 2;
-		if (lhs == NULL) { // we only check lhs since everything is done symmetrically
-		        // this means we are at a leaf
-			payload = (uint8_t*)malloc(dataLen*sizeof(uint8_t));
-			memcpy(payload, data, dataLen);
-			payloadLen = dataLen;	
-			return;
-		}
-		lhs->SetLeaves(data, splitDataLen);
-		rhs->SetLeaves(data + splitDataLen, splitDataLen); 
-	}
-
 	void CombineLeaves() {
 			Payload concattedPayloads = Payload(lhs->GetPayload(), rhs->GetPayload());
 			Payload hashedPayload = concattedPayloads.Hash();	
@@ -331,7 +310,7 @@ int main() {
 					      testDataDir + "_100MBfile.dat",
 					      testDataDir + "_1GBfile.dat",
 					  testDataDir + "_10GBfile.dat"*/};
-  	//generateTestData(filenames); 
+  	generateTestData(filenames); 
 
 	for (int i = 0; i < filenames.size(); ++i) {
 		std::cout << "\nBenchmark for " << filenames.at(i) << "\n";
