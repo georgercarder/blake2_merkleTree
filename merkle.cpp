@@ -175,12 +175,8 @@ class Merkle {
 			}
 				
 			int blockLength = GenBlockLength(height, dataLen);
-			//int numberOfLeaves = Power((long int)2, height);
-				
-			Merkle *l = new(Merkle);
 			for (int i = 0; i < leaves->size(); ++i) {
-				l = leaves->at(i);
-				l->SetData(data + i * blockLength, blockLength);
+				leaves->at(i)->SetData(data + i * blockLength, blockLength);
 			}
 		} else if (height == 0) { // is leaf
 			// this means we are at a leaf
@@ -310,7 +306,7 @@ int main() {
 	for (int i = 0; i < filenames.size(); ++i) {
 		
 		Merkle *m = new(Merkle);
-		int height = 4;
+		int height = 2;
 		*m = Merkle(height);
 		
 		std::cout << "\nBenchmark for " << filenames.at(i) << "\n";
